@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>对话框</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="css/mui.min.css">
+		<style>
+			.mui-btn {
+				display: block;
+				width: 120px;
+				margin: 10px auto;
+			}
+			
+			#info {
+				padding: 20px 10px;
+			}
+		</style>
+
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<h1 class="mui-title">对话框</h1>
+		</header>
+		<div class="mui-content">
+			<div class="mui-content-padded" style="margin: 5px;text-align: center;">
+				<button id='alert-btn' type="button" class="mui-btn mui-btn-blue mui-btn-outlined">警告消息框</button>
+				<button id='confirm-btn' type="button" class="mui-btn mui-btn-blue mui-btn-outlined">确认消息框</button>
+				<button id='prompt-btn' type="button" class="mui-btn mui-btn-blue mui-btn-outlined">输入对话框</button>
+				<button id='toast-btn' type="button" class="mui-btn mui-btn-blue mui-btn-outlined">自动消失提示框</button>
+				<div id="info"></div>
+			</div>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript" charset="utf-8">
+			// mui初始化
+			mui.init({
+				swipeBack: true 
+			});
+			
+			// 提示语
+			var info = document.getElementById("info");
+			
+			// 警告信息框
+			document.getElementById("alert-btn").addEventListener('tap', function() {
+				mui.alert('这是一个警告信息', '警告框', function() {
+					info.innerText = '警告被关闭了';
+				});
+			});
+			
+			// 确认信息框
+			document.getElementById("confirm-btn").addEventListener('tap', function() {
+				var btnArray = ['否', '是'];
+				mui.confirm('我是大帅哥', '确认框', btnArray, function(e) {
+					if (e.index == 1) {
+						info.innerText = '你说的对';
+					} else {
+						info.innerText = '你撒谎'
+					}
+				})
+			});
+			
+			// 输入信息框
+			document.getElementById("prompt-btn").addEventListener('tap', function(e) {
+				e.detail.gesture.preventDefault(); 
+				var btnArray = ['取消', '确定'];
+				mui.prompt('约么', '好呀', '输入框', btnArray, function(e) {
+					if (e.index == 1) {
+						info.innerText = e.value;
+					} else {
+						info.innerText = '真的不约么?';
+					}
+				})
+			});
+			
+			// 自动消息信息框
+			document.getElementById("toast-btn").addEventListener('tap', function() {
+				mui.toast('我会自己消失哦');
+			});
+		</script>
+	</body>
+
+</html>
